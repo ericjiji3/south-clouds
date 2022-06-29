@@ -32,7 +32,7 @@ const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere)
 
 
-loader.load('./assets/building1.obj', function(building1){
+loader.load('/assets/building1.obj', function(building1){
     building1.traverse( function( child ) {
         if ( child instanceof THREE.Mesh ) {
             child.material = material;
