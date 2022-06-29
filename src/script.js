@@ -31,6 +31,7 @@ material.color = new THREE.Color(0xff0000)
 const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere)
 
+
 loader.load('/assets/building1.obj', function(building1){
     building1.traverse( function( child ) {
         if ( child instanceof THREE.Mesh ) {
