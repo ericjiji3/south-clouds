@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import { ObjectLoader } from 'three'
-
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 // Loading
 const textureLoader = new THREE.TextureLoader()
@@ -19,7 +19,7 @@ const scene = new THREE.Scene()
 
 // Objects
 const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
-
+const loader = new OBJLoader();
 
 
 // Materials
@@ -31,6 +31,20 @@ material.color = new THREE.Color(0xff0000)
 const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere)
 
+loader.load('/assets/building1.obj', function(building1){
+    building1.traverse( function( child ) {
+        if ( child instanceof THREE.Mesh ) {
+            child.material = material;
+        }
+    } );
+    scene.add(building1)
+    building1.position.x = 50
+    const building1Folder = gui.addFolder('Building 1')
+    building1Folder.add(building1.position, 'y')
+    building1Folder.add(building1.position, 'x')
+    building1Folder.add(building1.position, 'z')
+});
+
 
 // Lights
 
@@ -40,10 +54,14 @@ pointLight.position.y = 3
 pointLight.position.z = 4
 scene.add(pointLight)
 
-gui.add(pointLight.position, 'y')
-gui.add(pointLight.position, 'x')
-gui.add(pointLight.position, 'z')
-gui.add(pointLight, 'intensity')
+const pointLightFolder = gui.addFolder('Point Light')
+pointLightFolder.add(pointLight.position, 'y')
+pointLightFolder.add(pointLight.position, 'x')
+pointLightFolder.add(pointLight.position, 'z')
+pointLightFolder.add(pointLight, 'intensity')
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 1)
+scene.add(pointLightHelper)
+
 /**
  * Sizes
  */
@@ -76,6 +94,13 @@ camera.position.x = 0
 camera.position.y = 0
 camera.position.z = 2
 scene.add(camera)
+
+const cameraFolder = gui.addFolder('Camera')
+cameraFolder.add(camera.position, 'y')
+cameraFolder.add(camera.position, 'x')
+cameraFolder.add(camera.position, 'z')
+const cameraHelper = new THREE.CameraHelper(camera)
+scene.add(cameraHelper)
 
 // Controls
 // const controls = new OrbitControls(camera, canvas)
