@@ -2,6 +2,8 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
+import { ObjectLoader } from 'three'
+
 
 // Loading
 const textureLoader = new THREE.TextureLoader()
@@ -18,6 +20,8 @@ const scene = new THREE.Scene()
 // Objects
 const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
 
+
+
 // Materials
 
 const material = new THREE.MeshToonMaterial()
@@ -26,6 +30,7 @@ material.color = new THREE.Color(0xff0000)
 // Mesh
 const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere)
+
 
 // Lights
 
